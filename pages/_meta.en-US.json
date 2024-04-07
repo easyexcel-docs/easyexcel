@@ -1,0 +1,16 @@
+{
+  "*": {
+    "theme": {
+      "footer": false
+    }
+  },
+  "index": {
+    "title": "Introduction",
+    "type": "page",
+    "display": "hidden"
+  },
+  "docs": {
+    "title": "Docs",
+    "type": "Easyexcel"
+  }
+}
