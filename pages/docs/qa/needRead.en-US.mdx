@@ -1,92 +1,91 @@
+# Must read
 
-# 必读
+## basic function
 
-## 基础功能
+### Function not supported
 
-### 不支持功能
+* Concurrent writing and reading of a single file
+* Read pictures
+* macro
 
-* 单个文件的并发写入、读取
-* 读取图片
-* 宏
+### pom import
 
-### pom导入
-
-复制以下代码，并替换成最新版本，或者直接打开：[![Maven central](https://maven-badges.herokuapp.com/maven-central/com.alibaba/easyexcel/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.alibaba/easyexcel)
-，右边可以直接复制
-如果看不到图片则直接打开：[https://maven-badges.herokuapp.com/maven-central/com.alibaba/easyexcel](https://maven-badges.herokuapp.com/maven-central/com.alibaba/easyexcel)
+Copy the following code and replace it with the latest version, or open it directly: [![Maven central](https://maven-badges.herokuapp.com/maven-central/com.alibaba/easyexcel/badge.svg)](https ://maven-badges.herokuapp.com/maven-central/com.alibaba/easyexcel)
+, the right side can be copied directly
+If you cannot see the image, open it directly: [https://maven-badges.herokuapp.com/maven-central/com.alibaba/easyexcel](https://maven-badges.herokuapp.com/maven-central/com .alibaba/easyexcel)
 
 ```xml
 
 <dependency>
     <groupId>com.alibaba</groupId>
     <artifactId>easyexcel</artifactId>
-    <version>最新版本</version>
+    <version>latest version</version>
 </dependency>
 ```
 
-### 查看最新版本
+### View the latest version
 
-图片的绿色小字就是最新版本：
+The small green text in the picture is the latest version:
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/com.alibaba/easyexcel/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.alibaba/easyexcel)
-如果看不到图片则直接打开：[https://mvnrepository.com/artifact/com.alibaba/easyexcel](https://mvnrepository.com/artifact/com.alibaba/easyexcel)
+If you can’t see the picture, open it directly：[https://mvnrepository.com/artifact/com.alibaba/easyexcel](https://mvnrepository.com/artifact/com.alibaba/easyexcel)
 
-### 写excel的情况下填充和写怎么选择？
+### How to choose between filling and writing when writing in excel?
 
-填充其实也不会占用大量内存，用的也是文件缓存，最后统一书写，如果导出的内容各种格式复杂，建议直接用模板然后填充（填充的数据会自动有格式）。如果格式相对简单，建议直接用写，相对来说，直接导出性能还是高一丢丢。
+In fact, filling does not take up a lot of memory. It also uses file cache and is written in a unified manner. If the exported content has complex formats, it is recommended to directly use a template and then fill it (the filled data will automatically be formatted). If the format is relatively simple, it is recommended to write it directly. Relatively speaking, the performance of direct export is still a little higher.
 
-### 关于`@Getter`、`@Setter`、`@EqualsAndHashCode`
+### About `@Getter`, `@Setter`, `@EqualsAndHashCode`
 
-读写的对象都用到了[Lombok](https://www.projectlombok.org/),他会自动生成`get`,`set` ，如果不需要的话，自己创建对象并生成`get`,`set` 。
+[Lombok](https://www.projectlombok.org/) is used for reading and writing objects. It will automatically generate `get`, `set`. If not needed, create the object yourself and generate `get`,` set`.
 
-### 只要部分字段去匹配excel(excel写入内容匹配不上等)
+### As long as some fields match excel (the content written in excel does not match well, etc.)
 
-`easyexcel`默认是全部实体字段都会参与读写，不管你是否加了`@ExcelProperty`注解
+`easyexcel` defaults to all entity fields participating in reading and writing, regardless of whether you add the `@ExcelProperty` annotation
 
-* 如果您的版本低于2.1.6,建升级到以上版本
-* 升级了还有，在类的最上面加入`@ExcelIgnoreUnannotated`注解，加入这个注解后只有加了`@ExcelProperty`才会参与读写。
+* If your version is lower than 2.1.6, it is recommended to upgrade to the above version
+* After the upgrade, add the `@ExcelIgnoreUnannotated` annotation at the top of the class. After adding this annotation, only adding `@ExcelProperty` will participate in reading and writing.
 
-### `csv`读写的支持
+### `csv` reading and writing support
 
-在`3.0.0-beta1`版本开始支持，读的时候会自动判断。写的时候指定`excelType`就行。
+It is supported in version `3.0.0-beta1` and will be automatically judged when reading. Just specify `excelType` when writing.
 
 ```java
-   EasyExcel.write(fileName, DemoData.class)
-            // 指定导出类型为csv
-            .excelType(ExcelTypeEnum.CSV)
-            .sheet("模板")
-            .doWrite(() -> {
-                // 分页查询数据
-                return data();
-            });
+    EasyExcel.write(fileName, DemoData.class)
+             // Specify the export type as csv
+             .excelType(ExcelTypeEnum.CSV)
+             .sheet("template")
+             .doWrite(() -> {
+                 // Query data by page
+                 return data();
+             });
 ```
 
-## 兼容性问题
+## Compatibility issues
 
-### 读取文件务必使用2.0.5+
+### Be sure to use 2.0.5+ to read files
 
-2.0.0-beta1到2.0.2有小概率会丢失数字。
+From 2.0.0-beta1 to 2.0.2, there is a small probability that numbers will be lost.
 
-### beta版本使用注意
+### Notes on using the beta version
 
-用beta版本的同学注意，建议一个月以后看看有没有正式版(一般一个月内肯定会升级正式版)
-，有的话改成正式版，因为beta版，容易如有bug,然后也别跳级升级比如你用的是2.1.0-beat1,建议一个月后升级到2.1.x，第一第二位不变，第三位用最新的就可以。
+Note to students using the beta version, it is recommended to check if there is an official version in a month (usually the official version will be upgraded within a month)
+, if any, change it to the official version, because the beta version is prone to bugs, so don’t skip the upgrade. For example, if you are using 2.1.0-beat1, it is recommended to upgrade to 2.1.x after one month. The first and second places are not Change, the third one can use the latest one.
 
-### 关于版本选择
+### About version selection
 
 :::tip
-如果项目中没有使用过poi,且jdk版本在8-17之间，直接使用最新版本，别犹豫。
+If poi has not been used in the project and the jdk version is between 8-17, use the latest version directly without hesitation.
 :::
-如果项目中已经使用过poi或者jdk版本小于8的，请参看下面表格做出选择。
+If POI or JDK version less than 8 has been used in the project, please refer to the table below to make your choice.
 
-| 版本                 | poi依赖版本 (支持范围)        | jdk版本支持范围    | 备注                                          |
+| Version                 | poi dependency version (support range)        | jdk version support range    | Remark                                          |
 |--------------------|-----------------------|--------------|---------------------------------------------|
-| 3.1.0+             | 4.1.2 (4.1.2 - 5.2.2) | jkd8 - jdk17 | 推荐使用，会更新的版本                                 |
-| 3.0.0-beta1 - 3.0.5 | 4.1.2 (4.1.2 - 5.2.2) | jkd8 - jdk11 | 不推荐项目新引入此版本，除非超级严重bug,否则不再更新                |
-| 2.0.0-beta1-2.2.11 | 3.17 (3.17 - 4.1.2)   | jdk6 - jdk11 | 不推荐项目新引入此版本，除非是jdk6否则不推荐使用，除非超级严重bug,否则不再更新 |
-| 1+版本               | 3.17 (3.17 - 4.1.2)   | jdk6 - jdk11 | 不推荐项目新引入此版本，超级严重bug,也不再更新                   |
+| 3.1.0+             | 4.1.2 (4.1.2 - 5.2.2) | jkd8 - jdk17 | Recommended to use, will update the version                                 |
+| 3.0.0-beta1 - 3.0.5 | 4.1.2 (4.1.2 - 5.2.2) | jkd8 - jdk11 | It is not recommended to introduce this version into new projects. Unless there is a super serious bug, it will not be updated again.                |
+| 2.0.0-beta1-2.2.11 | 3.17 (3.17 - 4.1.2)   | jdk6 - jdk11 | It is not recommended to introduce this version into new projects. It is not recommended to use it unless it is jdk6. It will not be updated unless it has a super serious bug. |
+| 1+版本               | 3.17 (3.17 - 4.1.2)   | jdk6 - jdk11 | It is not recommended to introduce this version into new projects. It has super serious bugs and will no longer be updated.                   |
 
 :::important
-3+版本的的easyexcel，使用poi 5+版本时，需要自己引入poi 5+版本的包，且手动排除：poi-ooxml-schemas，例如：
+For version 3+ of easyexcel, when using version 5+ of poi, you need to introduce the package of version 5+ of poi yourself and manually exclude: poi-ooxml-schemas, for example:
 
 ```xml
 
@@ -105,96 +104,96 @@
 
 :::
 
-### 出现 `NoSuchMethodException`， `ClassNotFoundException`, `NoClassDefFoundError` 等兼容性问题
+### Compatibility issues such as `NoSuchMethodException`, `ClassNotFoundException`, `NoClassDefFoundError` and other problems occur
 
-极大概率是jar冲突，可能是以下原因。
+There is a high probability that it is a jar conflict, which may be due to the following reasons.
 
-* 直接`clean`项目后查看是否可行
-* `poi`版本冲突（项目中已经含有poi的其他版本了），参照:[关于版本选择](#关于版本选择)来指定版本。
+* Directly `clean` the project to see if it is feasible
+* `poi` version conflict (the project already contains other versions of poi), refer to: [About version selection] (#About version selection) to specify the version.
 * `ehcache`
-  版本冲突，打开[https://mvnrepository.com/artifact/com.alibaba/easyexcel](https://mvnrepository.com/artifact/com.alibaba/easyexcel)
-  ，打开对应的版本，看下所需要的`ehcache`版本
+Version conflict, open [https://mvnrepository.com/artifact/com.alibaba/easyexcel](https://mvnrepository.com/artifact/com.alibaba/easyexcel)
+, open the corresponding version and check the required `ehcache` version
 
-### 关于版本升级
+### About version upgrade
 
-* 不建议跨大版本升级 尤其跨2个大版本
-* 大版本升级后建议相关内容重新测试下
-* 2+ 升级到 3+ ，下面3个地方不兼容:
-* 使用了自定义拦截器去修改样式的会出问题（不会编译报错）
+* It is not recommended to upgrade across major versions, especially across 2 major versions.
+* After a major version upgrade, it is recommended to retest the relevant content.
+*Upgrade from 2+ to 3+, the following 3 places are incompatible:
+* There will be problems if you use a custom interceptor to modify the style (no compilation error will be reported)
 
 ```java
-// 以前的写法
+//Previous writing method
 @Override
 protected void setHeadCellStyle(Cell cell, Head head, Integer relativeRowIndex) {
-            cell.setCellStyle(style);
- }
+             cell.setCellStyle(style);
+  }
 
-// 现在的写法1
-// 这个写完也需要测试下 还是老代码 不管使用了什么拦截器 都可以这么写
-// 这个会导致格式化数据失效
-    protected void setHeadCellStyle(CellWriteHandlerContext context) {
-            cell.setCellStyle(style);
+// Current writing method 1
+// This needs to be tested after writing. It is still the old code. No matter what interceptor is used, it can be written like this.
+// This will cause the formatted data to become invalid.
+     protected void setHeadCellStyle(CellWriteHandlerContext context) {
+             cell.setCellStyle(style);
 
-         // 这里要把 WriteCellData的样式清空， 不然后面还有一个拦截器 FillStyleCellWriteHandler 默认会将 WriteCellStyle 设置到
-         // cell里面去 会导致自己设置的不一样
-         context.getFirstCellData().setWriteCellStyle(null);
-    }
+          // Here we need to clear the style of WriteCellData, otherwise there is an interceptor behind it. FillStyleCellWriteHandler will set WriteCellStyle to
+          // Going inside the cell will cause your settings to be different.
+          context.getFirstCellData().setWriteCellStyle(null);
+     }
 
 
-// 现在的写法2 推荐
-// 这个方案靠谱 以前用 poi的CellStyle  现在用 WriteCellStyle 入参基本都一致
-    protected void setHeadCellStyle(CellWriteHandlerContext context) {
-                     // 第一个单元格
-                        // 只要不是头 一定会有数据 当然fill的情况 可能要context.getCellDataList() ,这个需要看模板，因为一个单元格会有多个 WriteCellData
-                        WriteCellData<?> cellData = context.getFirstCellData();
-                        // 这里需要去cellData 获取样式
-                        // 很重要的一个原因是 WriteCellStyle 和 dataFormatData绑定的 简单的说 比如你加了 DateTimeFormat
-                        // ，已经将writeCellStyle里面的dataFormatData 改了 如果你自己new了一个WriteCellStyle，可能注解的样式就失效了
-                        // 然后 getOrCreateStyle 用于返回一个样式，如果为空，则创建一个后返回
-                        WriteCellStyle writeCellStyle = cellData.getOrCreateStyle();
-                        writeCellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
-                        // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND
-                        writeCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
-    }
+// Current writing method 2 recommended
+// This solution is reliable. I used poi's CellStyle before and now I use WriteCellStyle. The input parameters are basically the same.
+     protected void setHeadCellStyle(CellWriteHandlerContext context) {
+                      // first cell
+                         // As long as it is not the header, there will definitely be data. Of course, in the case of fill, context.getCellDataList() may be required. This requires looking at the template, because a cell will have multiple WriteCellData
+                         WriteCellData<?> cellData = context.getFirstCellData();
+                         //Here you need to go to cellData to get the style
+                         //A very important reason is that WriteCellStyle is bound to dataFormatData. To put it simply, for example, if you add DateTimeFormat
+                         //, the dataFormatData in writeCellStyle has been changed. If you create a new WriteCellStyle yourself, the annotated style may be invalid.
+                         // Then getOrCreateStyle is used to return a style. If it is empty, create one and return
+                         WriteCellStyle writeCellStyle = cellData.getOrCreateStyle();
+                         writeCellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
+                         // Here you need to specify FillPatternType as FillPatternType.SOLID_FOREGROUND
+                         writeCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
+     }
 ```
 
-* 读的时候`invoke`里面抛出异常，不会再额外封装一层`ExcelAnalysisException` （不会编译报错）
-    * 这个捕获异常的时候 不用再`getCause`了
-* 样式等注解涉及到 `boolean` or 一些枚举 值的 有变动，新增默认值（会编译报错，注解改就行）
-    * 这个直接改了就行
+* When reading, an exception is thrown in `invoke`, and an additional layer of `ExcelAnalysisException` will not be encapsulated (no compilation error will be reported)
+   * When catching exceptions, there is no need to use `getCause` anymore.
+* Style and other annotations involve changes in `boolean` or some enumeration values, and a new default value will be added (it will compile and report an error, just change the annotation)
+   * Just change this directly
 
-### 我在本地可以，发布到线上环境怎么不可以了？
+### I can do it locally, but why can’t I publish it to the online environment?
 
-大概率是缺少字体库导致，2个方案：
+There is a high probability that it is caused by the lack of font library. There are 2 solutions:
 
-* 安装字体（推荐）
-    * 看下服务器是否安装了字体，jdk8字体需要自己安装请安装字体：dejavu-sans-fonts 和 fontconfig 在dockerfile中增加字体安装命令：
-      ```RUN yum install dejavu-sans-fonts fontconfig -y```
-    * 普通的线上环境直接运行： ```yum install dejavu-sans-fonts fontconfig -y```
-* 开启内存处理模式（不推荐，1W数据以内可以考虑，大了很容易OOM）
+* Install fonts (recommended)
+   * Check whether the fonts are installed on the server. The jdk8 font needs to be installed by yourself. Please install the fonts: dejavu-sans-fonts and fontconfig. Add the font installation command in the dockerfile:
+```RUN yum install dejavu-sans-fonts fontconfig -y```
+   * Run directly in ordinary online environment: ```yum install dejavu-sans-fonts fontconfig -y```
+* Turn on the memory processing mode (not recommended, it can be considered if the data is within 1W, it is easy to OOM if it is too large)
 
 ```java
-        EasyExcel
-        .write(fileName, DemoData.class)
-        // 核心这个配置 开始内存处理模式
-        .inMemory(Boolean.TRUE)
-        .sheet("模板")
-        .doWrite(data());
+         EasyExcel
+         .write(fileName, DemoData.class)
+         // Core this configuration starts memory processing mode
+         .inMemory(Boolean.TRUE)
+         .sheet("template")
+         .doWrite(data());
 ```
 
-## 高频问题
+## High frequency problem
 
-### 我的部分字段为什么没法读取或者写入？
+### Why can't some of my fields be read or written?
 
-* 读写反射对象用到了`Cglib`,所以成员变量必须符合驼峰规范，请确认是否符合驼峰规范
-    * 在`3.0.0-beta1` 兼容了部分非驼峰，但是还是不建议使用非驼峰字段
-* 使用了`lombok`的`@Accessors(chain = true)` ，无法被`Cglib`读取
-    * 建议使用`@Builder`来替换`@Accessors(chain = true)`
+* `Cglib` is used to read and write reflection objects, so member variables must conform to the camel case specification. Please confirm whether it conforms to the camel case specification.
+   * In `3.0.0-beta1`, some non-camel cases are compatible, but it is still not recommended to use non-camel cases.
+* Uses `@Accessors(chain = true)` of `lombok` and cannot be read by `Cglib`
+   * It is recommended to use `@Builder` to replace `@Accessors(chain = true)`
 
-### 出现 `NoSuchMethodException` ， `ClassNotFoundException`, `NoClassDefFoundError`等异常
+### `NoSuchMethodException`, `ClassNotFoundException`, `NoClassDefFoundError` and other exceptions occur
 
-一般是版本兼容出问题了，参照:[关于版本选择]
+Usually there is a problem with version compatibility. Please refer to: [About version selection]
 
-### `NullPointerException at sun.awt.FontConfiguration.getVersion` ，`Could not initialize class sun.awt.X11FontManage`
+### `NullPointerException at sun.awt.FontConfiguration.getVersion` , `Could not initialize class sun.awt.X11FontManage`
 
-这个一般是缺少字体导致,请参照：我在本地可以，发布到线上环境怎么不可以了？
+This is usually caused by a lack of fonts. Please refer to: I can do it locally, but why can’t I publish it to an online environment?

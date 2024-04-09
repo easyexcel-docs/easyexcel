@@ -1,99 +1,99 @@
 # EasyExcel
-Java解析、生成Excel比较有名的框架有Apache poi、jxl。但他们都存在一个严重的问题就是非常的耗内存，poi有一套SAX模式的API可以一定程度的解决一些内存溢出的问题，但POI还是有一些缺陷，比如07版Excel解压缩以及解压后存储都是在内存中完成的，内存消耗依然很大。
-easyexcel重写了poi对07版Excel的解析，一个3M的excel用POI sax解析依然需要100M左右内存，改用easyexcel可以降低到几M，并且再大的excel也不会出现内存溢出；03版依赖POI的sax模式，在上层做了模型转换的封装，让使用者更加简单方便
+The more famous frameworks for Java parsing and generating Excel include Apache poi and jxl. But they all have a serious problem that they consume a lot of memory. POI has a set of SAX mode APIs that can solve some memory overflow problems to a certain extent, but POI still has some flaws, such as the decompression and storage of the 07 version of Excel. It is done in memory, and memory consumption is still very large.
+easyexcel rewrites poi's analysis of the 07 version of Excel. A 3M excel still requires about 100M of memory to parse with POI sax. Using easyexcel can reduce it to a few MB, and no matter how large the excel is, there will be no memory overflow; version 03 relies on POI's sax mode encapsulates model conversion in the upper layer, making it easier and more convenient for users.
 
-# 推荐作者最新开源产品 - Chat2DB
-Chat2DB 是第一个AI驱动的数据库管理，跟navicat、dbeaver工具相比更加简单易用，是数据开发、协作的工具，支持MySQL、PostgreSQL、SQLServer、Oracle、Redis、MongoDB、ClickHouse等数据库，不会写SQL也能快速的生成SQL、生成报表。
-Github地址：[https://github.com/chat2db/Chat2DB](https://github.com/chat2db/Chat2DB)
-官方网站 [https://chat2db-ai.com/](https://chat2db-ai.com/)
+# Recommend the author's latest open source product - Chat2DB
+Chat2DB is the first AI-driven database management. It is simpler and easier to use than Navicat and dbeaver tools. It is a tool for data development and collaboration. It supports MySQL, PostgreSQL, SQLServer, Oracle, Redis, MongoDB, ClickHouse and other databases. It will not Writing SQL can also quickly generate SQL and generate reports.
+Github address: [https://github.com/chat2db/Chat2DB](https://github.com/chat2db/Chat2DB)
+Official website [https://chat2db-ai.com/](https://chat2db-ai.com/)
 
 
-# 网站
-*  官方网站：[https://easyexcel.chat2db-ai.com/](https://easyexcel.chat2db-ai.com/)
-* github地址：[https://github.com/alibaba/easyexcel](https://github.com/alibaba/easyexcel)
-* gitee地址：[https://gitee.com/easyexcel/easyexcel](https://gitee.com/easyexcel/easyexcel)
+#website
+* Official website: [https://easyexcel.chat2db-ai.com/](https://easyexcel.chat2db-ai.com/)
+* github address: [https://github.com/alibaba/easyexcel](https://github.com/alibaba/easyexcel)
+* gitee address: [https://gitee.com/easyexcel/easyexcel](https://gitee.com/easyexcel/easyexcel)
 
- # 16M内存23秒读取75M(46W行25列)的Excel（3.2.1+版本）
+# 16M memory, 23 seconds to read 75M (46W rows and 25 columns) Excel (version 3.2.1+)
 
-当然还有极速模式更快，但是内存占用会在100M多一点
+Of course, there is also a speed mode that is faster, but the memory usage will be a little more than 100M.
 !['open_table'](/image/quickstart/large.png)
 
- # 帮忙点个⭐Star
+# Help with a ⭐Star
 
-开源不易，如果觉得EasyExcel对您的工作还是有帮助的话，请帮忙在<a target="_blank" href='https://github.com/alibaba/easyexcel'><img src="https://img.shields.io/github/stars/alibaba/easyexcel.svg?style=flat-square&label=Stars&logo=github" alt="github star"/></a>
-的右上角点个⭐Star，您的支持是使EasyExcel变得更好最大的动力。
+Open source is not easy. If you think EasyExcel is still helpful to your work, please help <a target="_blank" href='https://github.com/alibaba/easyexcel'><img src="https:// img.shields.io/github/stars/alibaba/easyexcel.svg?style=flat-square&label=Stars&logo=github" alt="github star"/></a>
+Click the ⭐Star in the upper right corner. Your support is the biggest motivation to make EasyExcel better.
 
- ## 维护者
-姬朋飞（玉霄)、庄家钜
- ## 快速开始
- ### 读Excel
-DEMO代码地址：[https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/read/ReadTest.java](https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/read/ReadTest.java)
+## Maintainer
+Ji Pengfei (Yuxiao), Zhuang Jiaju
+## Quick start
+### Read Excel
+DEMO code address: [https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/read/ReadTest.java](https: //github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/read/ReadTest.java)
 
 ```java
-    /**
-     * 最简单的读
-     * <p>1. 创建excel对应的实体对象 参照{@link DemoData}
-     * <p>2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoDataListener}
-     * <p>3. 直接读即可
-     */
-    @Test
-    public void simpleRead() {
-        String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
-        EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet().doRead();
-    }
+     /**
+      *Easiest to read
+      * <p>1. Create the entity object corresponding to excel. Refer to {@link DemoData}
+      * <p>2. Since excel is read line by line by default, you need to create a callback listener for excel line by line. Refer to {@link DemoDataListener}
+      * <p>3. Just read it directly
+      */
+     @Test
+     public void simpleRead() {
+         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
+         // Here you need to specify which class to use for reading, and then the stream of the first sheet file will be automatically closed.
+         EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet().doRead();
+     }
 ```
 
-### 写Excel
-DEMO代码地址：[https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/write/WriteTest.java](https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/write/WriteTest.java)
+### Write Excel
+DEMO code address: [https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/write/WriteTest.java](https: //github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/write/WriteTest.java)
 ```java
-    /**
-     * 最简单的写
-     * <p>1. 创建excel对应的实体对象 参照{@link com.alibaba.easyexcel.test.demo.write.DemoData}
-     * <p>2. 直接写即可
-     */
-    @Test
-    public void simpleWrite() {
-        String fileName = TestFileUtil.getPath() + "write" + System.currentTimeMillis() + ".xlsx";
-        // 这里 需要指定写用哪个class去读，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        // 如果这里想使用03 则 传入excelType参数即可
-        EasyExcel.write(fileName, DemoData.class).sheet("模板").doWrite(data());
-    }
+     /**
+      * The simplest way to write
+      * <p>1. Create the entity object corresponding to excel. Refer to {@link com.alibaba.easyexcel.test.demo.write.DemoData}
+      * <p>2. Just write directly
+      */
+     @Test
+     public void simpleWrite() {
+         String fileName = TestFileUtil.getPath() + "write" + System.currentTimeMillis() + ".xlsx";
+         // Here you need to specify which class to use for reading, and then write to the first sheet, whose name is template. Then the file stream will be automatically closed.
+         // If you want to use 03 here, just pass in the excelType parameter
+         EasyExcel.write(fileName, DemoData.class).sheet("template").doWrite(data());
+     }
 ```
 
-### web上传、下载
-DEMO代码地址：[https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/web/WebTest.java](https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/web/WebTest.java)
+### web upload, download
+DEMO code address: [https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/web/WebTest.java](https: //github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/web/WebTest.java)
 ```java
-   /**
-     * 文件下载（失败了会返回一个有部分数据的Excel）
-     * <p>
-     * 1. 创建excel对应的实体对象 参照{@link DownloadData}
-     * <p>
-     * 2. 设置返回的 参数
-     * <p>
-     * 3. 直接写，这里注意，finish的时候会自动关闭OutputStream,当然你外面再关闭流问题不大
-     */
-    @GetMapping("download")
-    public void download(HttpServletResponse response) throws IOException {
-        // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setCharacterEncoding("utf-8");
-        // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
-        String fileName = URLEncoder.encode("测试", "UTF-8").replaceAll("\\+", "%20");
-        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DownloadData.class).sheet("模板").doWrite(data());
-    }
+    /**
+      * File download (if failed, an Excel with partial data will be returned)
+      * <p>
+      * 1. Create the entity object corresponding to excel. Refer to {@link DownloadData}
+      * <p>
+      * 2. Set the returned parameters
+      * <p>
+      * 3. Write directly. Note here that the OutputStream will be automatically closed when finishing. Of course, it is not a big problem if you close the stream outside.
+      */
+     @GetMapping("download")
+     public void download(HttpServletResponse response) throws IOException {
+         // Note here. Some students reported that using swagger will cause various problems. Please use the browser directly or postman.
+         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+         response.setCharacterEncoding("utf-8");
+         // URLEncoder.encode here can prevent Chinese garbled characters. Of course, it has nothing to do with easyexcel.
+         String fileName = URLEncoder.encode("Test", "UTF-8").replaceAll("\\+", "%20");
+         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+         EasyExcel.write(response.getOutputStream(), DownloadData.class).sheet("template").doWrite(data());
+     }
 
     /**
-     * 文件上传
-     * <p>1. 创建excel对应的实体对象 参照{@link UploadData}
-     * <p>2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link UploadDataListener}
-     * <p>3. 直接读即可
-     */
-    @PostMapping("upload")
-    @ResponseBody
-    public String upload(MultipartFile file) throws IOException {
-        EasyExcel.read(file.getInputStream(), UploadData.class, new UploadDataListener(uploadDAO)).sheet().doRead();
-        return "success";
-    }
+      * File Upload
+      * <p>1. Create the entity object corresponding to excel. Refer to {@link UploadData}
+      * <p>2. Since excel is read line by line by default, you need to create a callback listener for excel line by line. Refer to {@link UploadDataListener}
+      * <p>3. Just read it directly
+      */
+     @PostMapping("upload")
+     @ResponseBody
+     public String upload(MultipartFile file) throws IOException {
+         EasyExcel.read(file.getInputStream(), UploadData.class, new UploadDataListener(uploadDAO)).sheet().doRead();
+         return "success";
+     }
 ```
