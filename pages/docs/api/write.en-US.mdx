@@ -1,148 +1,148 @@
-# 写 Excel API
+# Write Excel
 
-## 注解
+## Annotations
 
-使用注解很简单，只要在对应的实体类上面加上注解即可。
+Using annotations is very simple, just add annotations to the corresponding entity class.
 
 ### `ExcelProperty`
 
-用于匹配excel和实体类的匹配,参数如下：
+Used to match excel and entity classes, the parameters are as follows:
 
-| 名称                  | 默认值               | 描述                                                                                                                                                    |
+| name                  | default value               | describe                                                                                                                                                    |
 |---------------------|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| value           | 空                 | 用于匹配excel中的头，必须全匹配,如果有多行头，会匹配最后一行头                                                                                                                    |
-| order           | Integer.MAX_VALUE | 优先级高于`value`，会根据`order`的顺序来匹配实体和excel中数据的顺序                                                                                                           |
-| index           | &#45;1            | 优先级高于`value`和`order`，会根据`index`直接指定到excel中具体的哪一列                                                                                                      |
-| converter           | 自动选择              | 指定当前字段用什么转换器，默认会自动选择。写的情况下只要实现`com.alibaba.excel.converters.Converter#convertToExcelData(com.alibaba.excel.converters.WriteConverterContext<T>)` 方法即可 |
+| value           | null                 | Used to match the header in excel. It must match all. If there are multiple row headers, it will match the last row header.                                                                                                                    |
+| order           | Integer.MAX_VALUE | The priority is higher than `value`, and the order of entities and data in excel will be matched according to the order of `order`                                                                                                           |
+| index           | &#45;1            | The priority is higher than `value` and `order`, and it will be directly assigned to a specific column in excel according to `index`                                                                                                      |
+| converter           | 自动选择              | Specify what converter to use for the current field. It will be automatically selected by default. When writing, just implement the `com.alibaba.excel.converters.Converter#convertToExcelData(com.alibaba.excel.converters.WriteConverterContext<T>)` method. |
 
 ### `ExcelIgnore`
 
-默认所有字段都会和excel去匹配，加了这个注解会忽略该字段
+By default, all fields will match excel. Adding this annotation will ignore this field.
 
 ### `ExcelIgnoreUnannotated`
 
-默认不管加不加`ExcelProperty`的注解的所有字段都会参与读写，加了`ExcelIgnoreUnannotated`注解以后，不加`ExcelProperty`注解的字段就不会参与
+By default, all fields regardless of whether they are annotated with `ExcelProperty` will participate in reading and writing. After adding `ExcelIgnoreUnannotated` annotation, fields without `ExcelProperty` annotation will not participate.
 
 ### `DateTimeFormat`
 
-日期转换，用`String`去接收excel日期格式的数据会调用这个注解,参数如下：
+For date conversion, using `String` to receive data in excel date format will call this annotation. The parameters are as follows:
 
-| 名称                  | 默认值  | 描述                                                             |
+| name                  | default value  | describe                                                             |
 |---------------------|------|----------------------------------------------------------------|
-| value           | 空    | 参照`java.text.SimpleDateFormat`书写即可                             |
-| use1904windowing           | 自动选择 | excel中时间是存储1900年起的一个双精度浮点数，但是有时候默认开始日期是1904，所以设置这个值改成默认1904年开始 |
+| value           | null    | Just write with reference to `java.text.SimpleDateFormat`                             |
+| use1904windowing           | automatically choose | Time in Excel is a double-precision floating point number stored since 1900, but sometimes the default start date is 1904, so set this value to the default start date of 1904. |
 
 ### `NumberFormat`
 
-数字转换，用`String`去接收excel数字格式的数据会调用这个注解。
+For digital conversion, using `String` to receive data in excel numeric format will call this annotation.
 
-| 名称                  | 默认值  | 描述                          |
+| name                  | default value  | describe                          |
 |---------------------|------|-----------------------------|
-| value           | 空    | 参照`java.text.DecimalFormat`书写即可 |
-| roundingMode           | RoundingMode.HALF_UP | 格式化的时候设置舍入模式                    |
+| value           | null    | Just write with reference to `java.text.DecimalFormat` |
+| roundingMode           | RoundingMode.HALF_UP | Set rounding mode when formatting                    |
 
-## 参数
+## Parameters
 
-### 概念介绍
+### Concept introduction
 
-* `WriteWorkbook` 可以理解成一个excel
-* `WriteSheet` 理解成一个excel里面的一个表单
-* `WriteTable` 一个表单里面如果有多个实际用的表格，则可以用`WriteTable`
+* `WriteWorkbook` can be understood as an excel
+* `WriteSheet` is understood as a form in excel
+* `WriteTable` If there are multiple actual tables in a form, you can use `WriteTable`
 
-### 通用参数
+### Common parameters
 
-`WriteWorkbook`,`WriteSheet` ,`WriteTable`都会有的参数，如果为空，默认使用上级。
+`WriteWorkbook`, `WriteSheet`, `WriteTable` will all have parameters. If it is empty, the upper level will be used by default.
 
-| 名称                  | 默认值   | 描述                                                                                                                                                                                                                                                                                  |
+| name                  | default value   | describe                                                                                                                                                                                                                                                                                  |
 |---------------------|-------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| converter           | 空     | 默认加载了很多转换器，这里可以加入不支持的字段                                                                                                                                                                                                                                                             |
-| writeHandler           | 空     | 写的处理器。可以实现`WorkbookWriteHandler`,`SheetWriteHandler`,`RowWriteHandler`,`CellWriteHandler`，在写入excel的不同阶段会调用                                                                                                                                                                          |
-| relativeHeadRowIndex           | 0     | 写入到excel和上面空开几行                                                                                                                                                                                                                                                                     |
-| head           | 空     | 与`clazz`二选一。读取文件头对应的列表，会根据列表匹配数据，建议使用class                                                                                                                                                                                                                                          |
-| clazz           | 空     | 与`head`二选一。读取文件的头对应的class，也可以使用注解。如果两个都不指定，则会读取全部数据                                                                                                                                                                                                                                 |
-| autoTrim           | true  | 会对头、读取数据等进行自动trim                                                                                                                                                                                                                                                                   |
-| use1904windowing           | false | excel中时间是存储1900年起的一个双精度浮点数，但是有时候默认开始日期是1904，所以设置这个值改成默认1904年开始                                                                                                                                                                                                                      |
-| useScientificFormat           | false | 数字转文本的时候在较大的数值的是否是否采用科学计数法                                                                                                                                                                                                                                                          |
-| needHead           | true  | 是否需要写入头到excel                                                                                                                                                                                                                                                                       |
-| useDefaultStyle           | true  | 是否使用默认的样式                                                                                                                                                                                                                                                                           |
-| automaticMergeHead           | true  | 自动合并头，头中相同的字段上下左右都会去尝试匹配                                                                                                                                                                                                                                                            |
-| excludeColumnIndexes           | 空     | 需要排除对象中的index的数据                                                                                                                                                                                                                                                                    |
-| excludeColumnFieldNames           | 空     | 需要排除对象中的字段的数据                                                                                                                                                                                                                                                                       |
-| includeColumnIndexes           | 空     | 只要导出对象中的index的数据                                                                                                                                                                                                                                                                    |
-| includeColumnFieldNames           | 空     | 只要导出对象中的字段的数据                                                                                                                                                                                                                                                                       |
-| orderByIncludeColumn           | false | @since 3.3.0 在使用了参数includeColumnFieldNames 或者 includeColumnIndexes的时候，会根据传入集合的顺序排序                                                                                                                                                                                                  |
-| filedCacheLocation           | THREAD_LOCAL | @since 3.3.0 解析class的field会有缓存，以前全局放到Map里面，3.3.0 以后默认放到ThreadLocal ，也就是说每次读写都会重新解析class，可以反射修改class的注解，并发场景不会相互影像。<br/>  THREAD_LOCAL：默认，每次读写都会缓存，但是不是同一次不会影像<br/>  MEMORY：放到全局的内存里面，理论上性能会更好，但是无法通过反射、排除等方法修改导出的对象<br/> NONE：不缓存，性能会变差，涉及到读的同时要写，而且还要反射、排除等方法区修改对象的情况下可以考虑使用。<br/> |
+| converter           | null     | Many converters are loaded by default. Unsupported fields can be added here.                                                                                                                                                                                                                                                             |
+| writeHandler           | null     | Write processor. `WorkbookWriteHandler`, `SheetWriteHandler`, `RowWriteHandler`, `CellWriteHandler` can be implemented and will be called at different stages of writing to excel.                                                                                                                                                                          |
+| relativeHeadRowIndex           | 0     | Write to excel and leave a few blank lines above                                                                                                                                                                                                                                                                     |
+| head           | null     | Alternative to `clazz`. Read the list corresponding to the file header and match the data according to the list. It is recommended to use class                                                                                                                                                                                                                                          |
+| clazz           | null     | Choose one from `head`. To read the class corresponding to the header of the file, you can also use annotations. If neither is specified, all data will be read                                                                                                                                                                                                                                 |
+| autoTrim           | true  | Will automatically trim headers, read data, etc.                                                                                                                                                                                                                                                                   |
+| use1904windowing           | false | Time in Excel is a double-precision floating point number stored since 1900, but sometimes the default start date is 1904, so set this value to the default start date of 1904.                                                                                                                                                                                                                      |
+| useScientificFormat           | false | When converting numbers to text, whether to use scientific notation for larger values?                                                                                                                                                                                                                                                          |
+| needHead           | true  | Do I need to write the header to excel?                                                                                                                                                                                                                                                                       |
+| useDefaultStyle           | true  | Whether to use the default style                                                                                                                                                                                                                                                                           |
+| automaticMergeHead           | true  | Automatically merge headers, and the same fields in the header will try to match up, down, left, and right                                                                                                                                                                                                                                                            |
+| excludeColumnIndexes           | null     | Data that needs to be excluded from the index in the object                                                                                                                                                                                                                                                                    |
+| excludeColumnFieldNames           | null     | Data for fields in objects that need to be excluded                                                                                                                                                                                                                                                                       |
+| includeColumnIndexes           | null     | Just export the data of index in the object                                                                                                                                                                                                                                                                    |
+| includeColumnFieldNames           | null     | Just export the data for the fields in the object                                                                                                                                                                                                                                                                       |
+| orderByIncludeColumn           | false | @since 3.3.0 When using the parameter includeColumnFieldNames or includeColumnIndexes, it will be sorted according to the order of the passed collection.                                                                                                                                                                                                  |
+| filedCacheLocation           | THREAD_LOCAL | @since 3.3.0 There will be a cache for parsing the field of the class. In the past, it was placed globally in the Map. After 3.3.0, it is placed in ThreadLocal by default. That is to say, the class will be re-parsed every time it is read and written, and the annotation of the class can be modified reflectively. Concurrency scenarios They will not image each other. <br/> THREAD_LOCAL: By default, it will be cached every time it is read and written, but it will not be imaged if it is not the same time<br/> MEMORY: Put it in the global memory, theoretically the performance will be better, but it cannot be reflected, excluded, etc. Modify the exported object<br/> NONE: Without caching, the performance will be worse. It can be considered when it involves writing while reading, and also requires reflection, exclusion and other methods to modify the object. <br/> |
 
 ### WriteWorkbook
 
 :::tip
-设置方法如下，找不到参数的看下通用参数里面是否存在。
+The setting method is as follows. If you cannot find the parameter, check whether it exists in the general parameters.
 
 ```java
- EasyExcel.write(fileName, DemoData.class)
-            // 在 write 方法之后， 在 sheet方法之前都是设置WriteWorkbook的参数
-            .sheet("模板")
-            .doWrite(() -> {
-                // 分页查询数据
-                return data();
-            });
+  EasyExcel.write(fileName, DemoData.class)
+             // After the write method and before the sheet method, the parameters of WriteWorkbook are set.
+             .sheet("template")
+             .doWrite(() -> {
+                 // Query data by page
+                 return data();
+             });
 ```
 
 :::
 
-| 名称                  | 默认值                    | 描述                                       |
+| name                  | default value                    | describe                                       |
 |---------------------|------------------------|------------------------------------------|
-| excelType           | 空                      | 当前excel的类型,支持XLS、XLSX、CSV                |
-| outputStream           | 空                      | 与`file`二选一。写入文件的流                        |
-| file           | 空                      | 与`outputStream`二选一。写入的文件                 |
-| templateInputStream           | 空                      | 模板的文件流                                   |
-| templateFile           | 空                      | 模板文件                                     |
-| charset           | Charset#defaultCharset | 只有csv文件有用，写入文件的时候使用的编码                   |
-| autoCloseStream           | true                   | 自动关闭写入的流。                                |
-| password           | 空                      | 读取文件的密码                                  |
-| inMemory           | false                  | 是否在内存处理，默认会生成临时文件以节约内存。内存模式效率会更好，但是容易OOM |
-| writeExcelOnException           | false                  | 写入过程中抛出异常了，是否尝试把数据写入到excel               |
+| excelType           | null                      | Current excel type, supports XLS, XLSX, CSV                |
+| outputStream           | null                      | Choose one from `file`. Stream to write to file                        |
+| file           | null                      | Choose one from `outputStream`. File written                 |
+| templateInputStream           | null                      | template file stream                                   |
+| templateFile           | null                      | template file                                     |
+| charset           | Charset#defaultCharset | Only csv files are useful, the encoding used when writing the file                   |
+| autoCloseStream           | true                   | Automatically close written streams                                |
+| password           | null                      | Password for reading file                                  |
+| inMemory           | false                  | Whether to process in memory, temporary files will be generated by default to save memory. Memory mode will be more efficient, but prone to OOM |
+| writeExcelOnException           | false                  | An exception was thrown during the writing process. Are you trying to write the data to excel?               |
 
 ### WriteSheet
 
 :::tip
-设置方法如下，找不到参数的看下通用参数里面是否存在。
+The setting method is as follows. If you cannot find the parameter, check whether it exists in the general parameters.
 
 ```java
- EasyExcel.write(fileName, DemoData.class)
-            .sheet("模板")
-             // 在 sheet 方法之后， 在 doWrite方法之前都是设置WriteSheet的参数
-            .doWrite(() -> {
-                // 分页查询数据
-                return data();
-            });
+  EasyExcel.write(fileName, DemoData.class)
+             .sheet("template")
+              // After the sheet method and before the doWrite method, the parameters of WriteSheet are set.
+             .doWrite(() -> {
+                 // Query data by page
+                 return data();
+             });
 ```
 
 :::
 
-| 名称 | 默认值 | 描述 |
+| name | default value | describe |
 |---------------------|-----|---------------------------------|
-| sheetNo | 0 | 需要写入的编码 |
-| sheetName | 空 | 需要些的Sheet名称，默认同`sheetNo`                |
+| sheetNo | 0 | The encoding to be written |
+| sheetName | null | Need some Sheetname, the default is the same as `sheetNo`                |
 
 ### WriteTable
 
 :::tip
-设置方法如下，找不到参数的看下通用参数里面是否存在。
+The setting method is as follows. If you cannot find the parameter, check whether it exists in the general parameters.
 
 ```java
-        EasyExcel.write(fileName, DemoData.class)
-            .sheet("模板")
-            .table()
-            // 在 table 方法之后， 在 doWrite方法之前都是设置WriteTable的参数
-            .doWrite(() -> {
-                // 分页查询数据
-                return data();
-            });
+         EasyExcel.write(fileName, DemoData.class)
+             .sheet("template")
+             .table()
+             // After the table method and before the doWrite method, the parameters of WriteTable are set.
+             .doWrite(() -> {
+                 // Query data by page
+                 return data();
+             });
 ```
 
 :::
 
-| 名称                  | 默认值 | 描述                              |
+| name                  | default value | describe                              |
 |---------------------|-----|---------------------------------|
-| tableNo           | 0   | 需要写入的编码            |
+| tableNo           | 0   | The encoding to be written            |

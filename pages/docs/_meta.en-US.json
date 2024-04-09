@@ -1,7 +1,7 @@
 {
-  "start-guide": "入门",
+  "start-guide": "getting Started",
   "api": "Easyexcel API",
-  "qa": "常见问题（必读）",
-  "contact":"联系我们",
-  "changelog":"更新记录"
+  "qa": "FAQ (must read)",
+  "contact":"contact us",
+  "changelog":"update record"
 }

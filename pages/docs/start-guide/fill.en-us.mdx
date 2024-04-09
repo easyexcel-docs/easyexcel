@@ -1,24 +1,24 @@
-# 填充Excel
+# Fill Excel
 
-## 示例代码
+## Sample code
 
-DEMO代码地址：[https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/fill/FillTest.java](https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/fill/FillTest.java)
+DEMO code address: [https://github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/fill/FillTest.java](https: //github.com/alibaba/easyexcel/blob/master/easyexcel-test/src/test/java/com/alibaba/easyexcel/test/demo/fill/FillTest.java)
 
-## 最简单的填充
+## The simplest filling
 
 ### since
 
 2.1.1
 
-### 最简单的填充的模板
+### The simplest filled template
 
 ![img](/image/quickstart/fill/simpleFillTemplate.png)
 
-### 最终效果
+### final effect
 
 ![img](/image/quickstart/fill/simpleFill.png)
 
-### 最简单的填充的对象
+### The simplest filled object
 
 ```java
 @Getter
@@ -31,307 +31,307 @@ public class FillData {
 }
 ```
 
-### 代码
+### code
 
 ```java
-    /**
-     * 最简单的填充
-     *
-     * @since 2.1.1
-     */
-    @Test
-    public void simpleFill() {
-        // 模板注意 用{} 来表示你要用的变量 如果本来就有"{","}" 特殊字符 用"\{","\}"代替
-        String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "simple.xlsx";
+     /**
+      * The simplest filling
+      *
+      * @since 2.1.1
+      */
+     @Test
+     public void simpleFill() {
+         // Template note: use {} to represent the variables you want to use. If there are "{", "}" special characters, use "\{", "\}" instead.
+         String templateFileName =
+             TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "simple.xlsx";
 
-        // 方案1 根据对象填充
-        String fileName = TestFileUtil.getPath() + "simpleFill" + System.currentTimeMillis() + ".xlsx";
-        // 这里 会填充到第一个sheet， 然后文件流会自动关闭
-        FillData fillData = new FillData();
-        fillData.setName("张三");
-        fillData.setNumber(5.2);
-        EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(fillData);
+         // Option 1 Fill based on object
+         String fileName = TestFileUtil.getPath() + "simpleFill" + System.currentTimeMillis() + ".xlsx";
+         //The first sheet will be filled here, and then the file stream will be automatically closed.
+         FillData fillData = new FillData();
+         fillData.setName("Zhang San");
+         fillData.setNumber(5.2);
+         EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(fillData);
 
-        // 方案2 根据Map填充
-        fileName = TestFileUtil.getPath() + "simpleFill" + System.currentTimeMillis() + ".xlsx";
-        // 这里 会填充到第一个sheet， 然后文件流会自动关闭
-        Map<String, Object> map = MapUtils.newHashMap();
-        map.put("name", "张三");
-        map.put("number", 5.2);
-        EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(map);
-    }
+         // Option 2 Fill according to Map
+         fileName = TestFileUtil.getPath() + "simpleFill" + System.currentTimeMillis() + ".xlsx";
+         //The first sheet will be filled here, and then the file stream will be automatically closed.
+         Map<String, Object> map = MapUtils.newHashMap();
+         map.put("name", "Zhang San");
+         map.put("number", 5.2);
+         EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(map);
+     }
 ```
 
-## 填充列表
+## Populate the list
 
 ### since
 
 2.1.1
 
-### 模板
+### Template
 
 ![img](/image/quickstart/fill/listFillTemplate.png)
 
-### 最终效果
+### final effect
 
 ![img](/image/quickstart/fill/listFill.png)
 
-### 对象
+### Object
 
-参照：[最简单的填充的对象](#最简单的填充的对象)
+Reference: [The simplest filled object](#The simplest filled object)
 
-### 代码
+### Code
 
 ```java
-    /**
-     * 填充列表
-     *
-     * @since 2.1.1
-     */
-    @Test
-    public void listFill() {
-        // 模板注意 用{} 来表示你要用的变量 如果本来就有"{","}" 特殊字符 用"\{","\}"代替
-        // 填充list 的时候还要注意 模板中{.} 多了个点 表示list
-        // 如果填充list的对象是map,必须包涵所有list的key,哪怕数据为null，必须使用map.put(key,null)
-        String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "list.xlsx";
+     /**
+      * Populate the list
+      *
+      * @since 2.1.1
+      */
+     @Test
+     public void listFill() {
+         // Template note: use {} to represent the variables you want to use. If there are "{", "}" special characters, use "\{", "\}" instead.
+         // When filling in the list, please also pay attention to the extra dot {.} in the template to represent the list.
+         // If the object to fill the list is a map, it must include all keys of the list, even if the data is null, map.put(key, null) must be used
+         String templateFileName =
+             TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "list.xlsx";
 
-        // 方案1 一下子全部放到内存里面 并填充
-        String fileName = TestFileUtil.getPath() + "listFill" + System.currentTimeMillis() + ".xlsx";
-        // 这里 会填充到第一个sheet， 然后文件流会自动关闭
-        EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(data());
+         // Option 1 puts everything into the memory at once and fills it
+         String fileName = TestFileUtil.getPath() + "listFill" + System.currentTimeMillis() + ".xlsx";
+         //The first sheet will be filled here, and then the file stream will be automatically closed.
+         EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(data());
 
-        // 方案2 分多次 填充 会使用文件缓存（省内存）
-        fileName = TestFileUtil.getPath() + "listFill" + System.currentTimeMillis() + ".xlsx";
-        try (ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
-            excelWriter.fill(data(), writeSheet);
-            excelWriter.fill(data(), writeSheet);
-        }
-    }
+         // Solution 2: Fill in multiple times and use file cache (memory saving)
+         fileName = TestFileUtil.getPath() + "listFill" + System.currentTimeMillis() + ".xlsx";
+         try (ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
+             WriteSheet writeSheet = EasyExcel.writerSheet().build();
+             excelWriter.fill(data(), writeSheet);
+             excelWriter.fill(data(), writeSheet);
+         }
+     }
 ```
 
-## 复杂的填充
+## Complex padding
 
 ### since
 
 2.1.1
 
-### 模板
+### Template
 
 ![img](/image/quickstart/fill/complexFillTemplate.png)
 
-### 最终效果
+### final effect
 
 ![img](/image/quickstart/fill/complexFill.png)
 
-### 对象
+### Object
 
-参照：[最简单的填充的对象](#最简单的填充的对象)
+Reference: [The simplest filled object](#The simplest filled object)
 
-### 代码
+### Code
 
 ```java
-    /**
-     * 复杂的填充
-     *
-     * @since 2.1.1
-     */
-    @Test
-    public void complexFill() {
-        // 模板注意 用{} 来表示你要用的变量 如果本来就有"{","}" 特殊字符 用"\{","\}"代替
-        // {} 代表普通变量 {.} 代表是list的变量
-        String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "complex.xlsx";
+     /**
+      * Complex padding
+      *
+      * @since 2.1.1
+      */
+     @Test
+     public void complexFill() {
+         // Template note: use {} to represent the variables you want to use. If there are "{", "}" special characters, use "\{", "\}" instead.
+         // {} represents ordinary variables {.} represents variables that are lists
+         String templateFileName =
+             TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "complex.xlsx";
 
-        String fileName = TestFileUtil.getPath() + "complexFill" + System.currentTimeMillis() + ".xlsx";
-        // 方案1
-        try (ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
-            // 这里注意 入参用了forceNewRow 代表在写入list的时候不管list下面有没有空行 都会创建一行，然后下面的数据往后移动。默认 是false，会直接使用下一行，如果没有则创建。
-            // forceNewRow 如果设置了true,有个缺点 就是他会把所有的数据都放到内存了，所以慎用
-            // 简单的说 如果你的模板有list,且list不是最后一行，下面还有数据需要填充 就必须设置 forceNewRow=true 但是这个就会把所有数据放到内存 会很耗内存
-            // 如果数据量大 list不是最后一行 参照下一个
-            FillConfig fillConfig = FillConfig.builder().forceNewRow(Boolean.TRUE).build();
-            excelWriter.fill(data(), fillConfig, writeSheet);
-            excelWriter.fill(data(), fillConfig, writeSheet);
-            Map<String, Object> map = MapUtils.newHashMap();
-            map.put("date", "2019年10月9日13:28:28");
-            map.put("total", 1000);
-            excelWriter.fill(map, writeSheet);
-        }
-    }
+         String fileName = TestFileUtil.getPath() + "complexFill" + System.currentTimeMillis() + ".xlsx";
+         // plan 1
+         try (ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
+             WriteSheet writeSheet = EasyExcel.writerSheet().build();
+             // Note here that forceNewRow is used in the input parameter, which means that when writing the list, a row will be created regardless of whether there is a blank row under the list, and then the following data will be moved backward. The default is false, the next line will be used directly, if it does not exist, it will be created.
+             // If forceNewRow is set to true, it has the disadvantage that it will put all the data into the memory, so use it with caution.
+             // To put it simply, if your template has a list, and the list is not the last row, and there is still data to be filled in below, you must set forceNewRow=true, but this will put all the data into the memory, which will consume a lot of memory.
+             // If the amount of data is large, the list is not the last row, refer to the next one
+             FillConfig fillConfig = FillConfig.builder().forceNewRow(Boolean.TRUE).build();
+             excelWriter.fill(data(), fillConfig, writeSheet);
+             excelWriter.fill(data(), fillConfig, writeSheet);
+             Map<String, Object> map = MapUtils.newHashMap();
+             map.put("date", "October 9, 2019 13:28:28");
+             map.put("total", 1000);
+             excelWriter.fill(map, writeSheet);
+         }
+     }
 ```
 
-## 数据量大的复杂填充
+## Complex filling with large amount of data
 
 ### since
 
 2.1.1
 
-### 模板
+### Template
 
 ![img](/image/quickstart/fill/complexFillWithTableTemplate.png)
 
-### 最终效果
+### final effect
 
 ![img](/image/quickstart/fill/complexFillWithTable.png)
 
-### 对象
+### Object
 
-参照：[最简单的填充的对象](#最简单的填充的对象)
+Reference: [The simplest filled object](#The simplest filled object)
 
-### 代码
+### Code
 
 ```java
-    /**
-     * 数据量大的复杂填充
-     * <p>
-     * 这里的解决方案是 确保模板list为最后一行，然后再拼接table.还有03版没救，只能刚正面加内存。
-     *
-     * @since 2.1.1
-     */
-    @Test
-    public void complexFillWithTable() {
-        // 模板注意 用{} 来表示你要用的变量 如果本来就有"{","}" 特殊字符 用"\{","\}"代替
-        // {} 代表普通变量 {.} 代表是list的变量
-        // 这里模板 删除了list以后的数据，也就是统计的这一行
-        String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "complexFillWithTable.xlsx";
+     /**
+      * Complex filling of large amounts of data
+      * <p>
+      * The solution here is to ensure that the template list is the last line, and then splice the table. There is no solution for version 03, so you can only add memory directly.
+      *
+      * @since 2.1.1
+      */
+     @Test
+     public void complexFillWithTable() {
+         // Template note: use {} to represent the variables you want to use. If there are "{", "}" special characters, use "\{", "\}" instead.
+         // {} represents ordinary variables {.} represents variables that are lists
+         //The template here deletes the data after the list, which is the line of statistics.
+         String templateFileName =
+             TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "complexFillWithTable.xlsx";
 
-        String fileName = TestFileUtil.getPath() + "complexFillWithTable" + System.currentTimeMillis() + ".xlsx";
+         String fileName = TestFileUtil.getPath() + "complexFillWithTable" + System.currentTimeMillis() + ".xlsx";
 
-        // 方案1
-        try (ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
-            // 直接写入数据
-            excelWriter.fill(data(), writeSheet);
-            excelWriter.fill(data(), writeSheet);
+         // plan 1
+         try (ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
+             WriteSheet writeSheet = EasyExcel.writerSheet().build();
+             //Write data directly
+             excelWriter.fill(data(), writeSheet);
+             excelWriter.fill(data(), writeSheet);
 
-            // 写入list之前的数据
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("date", "2019年10月9日13:28:28");
-            excelWriter.fill(map, writeSheet);
+             //Write the data before the list
+             Map<String, Object> map = new HashMap<String, Object>();
+             map.put("date", "October 9, 2019 13:28:28");
+             excelWriter.fill(map, writeSheet);
 
-            // list 后面还有个统计 想办法手动写入
-            // 这里偷懒直接用list 也可以用对象
-            List<List<String>> totalListList = ListUtils.newArrayList();
-            List<String> totalList = ListUtils.newArrayList();
-            totalListList.add(totalList);
-            totalList.add(null);
-            totalList.add(null);
-            totalList.add(null);
-            // 第四列
-            totalList.add("统计:1000");
-            // 这里是write 别和fill 搞错了
-            excelWriter.write(totalListList, writeSheet);
-            // 总体上写法比较复杂 但是也没有想到好的版本 异步的去写入excel 不支持行的删除和移动，也不支持备注这种的写入，所以也排除了可以
-            // 新建一个 然后一点点复制过来的方案，最后导致list需要新增行的时候，后面的列的数据没法后移，后续会继续想想解决方案
-        }
-    }
+             // There is also a statistic behind the list. Find a way to write it manually.
+             // I'm lazy here and just use list. You can also use objects.
+             List<List<String>> totalListList = ListUtils.newArrayList();
+             List<String> totalList = ListUtils.newArrayList();
+             totalListList.add(totalList);
+             totalList.add(null);
+             totalList.add(null);
+             totalList.add(null);
+             // fourth column
+             totalList.add("Statistics:1000");
+             // This is write, don’t mistake it with fill.
+             excelWriter.write(totalListList, writeSheet);
+             // Generally speaking, the writing method is relatively complicated, but I haven't thought of a good version. Asynchronous writing to excel does not support deletion and movement of rows, nor does it support writing of notes, so it is also excluded.
+             // Create a new one and then copy it bit by bit. In the end, when the list needs to add new rows, the data in the following columns cannot be moved back. We will continue to think about solutions later.
+         }
+     }
 ```
 
-## 横向的填充
+## Horizontal padding
 
 ### since
 
 2.1.1
 
-### 模板
+### Template
 
 ![img](/image/quickstart/fill/horizontalFillTemplate.png)
 
-### 最终效果
+### final effect
 
 ![img](/image/quickstart/fill/horizontalFill.png)
 
-### 对象
+### Object
 
-参照：[最简单的填充的对象](#最简单的填充的对象)
+Reference: [The simplest filled object](#The simplest filled object)
 
-### 代码
+### Code
 
 ```java
-    /**
-     * 横向的填充
-     *
-     * @since 2.1.1
-     */
-    @Test
-    public void horizontalFill() {
-        // 模板注意 用{} 来表示你要用的变量 如果本来就有"{","}" 特殊字符 用"\{","\}"代替
-        // {} 代表普通变量 {.} 代表是list的变量
-        String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "horizontal.xlsx";
+     /**
+      *Horizontal padding
+      *
+      * @since 2.1.1
+      */
+     @Test
+     public void horizontalFill() {
+         // Template note: use {} to represent the variables you want to use. If there are "{", "}" special characters, use "\{", "\}" instead.
+         // {} represents ordinary variables {.} represents variables that are lists
+         String templateFileName =
+             TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "horizontal.xlsx";
 
-        String fileName = TestFileUtil.getPath() + "horizontalFill" + System.currentTimeMillis() + ".xlsx";
-        // 方案1
-        try (ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
-            FillConfig fillConfig = FillConfig.builder().direction(WriteDirectionEnum.HORIZONTAL).build();
-            excelWriter.fill(data(), fillConfig, writeSheet);
-            excelWriter.fill(data(), fillConfig, writeSheet);
+         String fileName = TestFileUtil.getPath() + "horizontalFill" + System.currentTimeMillis() + ".xlsx";
+         // plan 1
+         try (ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
+             WriteSheet writeSheet = EasyExcel.writerSheet().build();
+             FillConfig fillConfig = FillConfig.builder().direction(WriteDirectionEnum.HORIZONTAL).build();
+             excelWriter.fill(data(), fillConfig, writeSheet);
+             excelWriter.fill(data(), fillConfig, writeSheet);
 
-            Map<String, Object> map = new HashMap<>();
-            map.put("date", "2019年10月9日13:28:28");
-            excelWriter.fill(map, writeSheet);
-        }
-    }
+             Map<String, Object> map = new HashMap<>();
+             map.put("date", "October 9, 2019 13:28:28");
+             excelWriter.fill(map, writeSheet);
+         }
+     }
 ```
 
-## 多列表组合填充填充
+##Multiple list combination filling
 
 ### since
 
 2.2.0-beta1
 
-### 模板
+### Template
 
 ![img](/image/quickstart/fill/compositeFillTemplate.png)
 
-### 最终效果
+### final effect
 
 ![img](/image/quickstart/fill/compositeFill.png)
 
-### 对象
+### Object
 
-参照：[最简单的填充的对象](#最简单的填充的对象)
+Reference: [The simplest filled object](#The simplest filled object)
 
-### 代码
+### Code
 
 ```java
-    /**
-     * 多列表组合填充填充
-     *
-     * @since 2.2.0-beta1
-     */
-    @Test
-    public void compositeFill() {
-        // 模板注意 用{} 来表示你要用的变量 如果本来就有"{","}" 特殊字符 用"\{","\}"代替
-        // {} 代表普通变量 {.} 代表是list的变量 {前缀.} 前缀可以区分不同的list
-        String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "composite.xlsx";
+     /**
+      *Multiple list combination filling
+      *
+      * @since 2.2.0-beta1
+      */
+     @Test
+     public void compositeFill() {
+         // Template note: use {} to represent the variables you want to use. If there are "{", "}" special characters, use "\{", "\}" instead.
+         // {} represents an ordinary variable {.} represents a variable that is a list {prefix.} The prefix can distinguish different lists.
+         String templateFileName =
+             TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "composite.xlsx";
 
-        String fileName = TestFileUtil.getPath() + "compositeFill" + System.currentTimeMillis() + ".xlsx";
+         String fileName = TestFileUtil.getPath() + "compositeFill" + System.currentTimeMillis() + ".xlsx";
 
-        // 方案1
-        try (ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
-            FillConfig fillConfig = FillConfig.builder().direction(WriteDirectionEnum.HORIZONTAL).build();
-            // 如果有多个list 模板上必须有{前缀.} 这里的前缀就是 data1，然后多个list必须用 FillWrapper包裹
-            excelWriter.fill(new FillWrapper("data1", data()), fillConfig, writeSheet);
-            excelWriter.fill(new FillWrapper("data1", data()), fillConfig, writeSheet);
-            excelWriter.fill(new FillWrapper("data2", data()), writeSheet);
-            excelWriter.fill(new FillWrapper("data2", data()), writeSheet);
-            excelWriter.fill(new FillWrapper("data3", data()), writeSheet);
-            excelWriter.fill(new FillWrapper("data3", data()), writeSheet);
+         // plan 1
+         try (ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
+             WriteSheet writeSheet = EasyExcel.writerSheet().build();
+             FillConfig fillConfig = FillConfig.builder().direction(WriteDirectionEnum.HORIZONTAL).build();
+             // If there are multiple lists, the template must have {prefix.}. The prefix here is data1, and then multiple lists must be wrapped with FillWrapper.
+             excelWriter.fill(new FillWrapper("data1", data()), fillConfig, writeSheet);
+             excelWriter.fill(new FillWrapper("data1", data()), fillConfig, writeSheet);
+             excelWriter.fill(new FillWrapper("data2", data()), writeSheet);
+             excelWriter.fill(new FillWrapper("data2", data()), writeSheet);
+             excelWriter.fill(new FillWrapper("data3", data()), writeSheet);
+             excelWriter.fill(new FillWrapper("data3", data()), writeSheet);
 
-            Map<String, Object> map = new HashMap<String, Object>();
-            //map.put("date", "2019年10月9日13:28:28");
-            map.put("date", new Date());
+             Map<String, Object> map = new HashMap<String, Object>();
+             //map.put("date", "October 9, 2019 13:28:28");
+             map.put("date", new Date());
 
-            excelWriter.fill(map, writeSheet);
-        }
-    }
+             excelWriter.fill(map, writeSheet);
+         }
+     }
 ```

@@ -1,0 +1,417 @@
+# Update log
+
+# 3.3.2
+
+* Fixed the issue where `includeColumnIndexes` and `includeColumnFieldNames` were invalid after the sheet
+
+# 3.3.1
+
+* Modify version release issues
+
+#3.3.0
+
+* BOM data will be ignored when reading csv [Issue #3137](https://github.com/alibaba/easyexcel/issues/3137)
+* Solve the problem of garbled characters when opening csv in office. BOM data is included by default when writing csv.
+* When there are hidden characters in xlsx, they need to be ignored to ensure that they are the same as what is displayed.
+* Added `commons-io` 2.11.0 package
+* Remove `dependencyManagement` of test package in `easyexcel-parent` package
+* Delete `org.apache.poi.hssf.usermodel.PoiUtils.java` and use reflection to obtain [Issue #2804](https://github.com/alibaba/easyexcel/issues/2804)
+* The default object reflection cache is changed to `ThreadLocal`, and supports setting the reflection cache type [Issue #2792](https://github.com/alibaba/easyexcel/issues/2792)
+* Support sorting based on `includeColumnIndexes` and `includeColumnFieldNames` [Issue #2697](https://github.com/alibaba/easyexcel/issues/2697)
+* Based on file stream analysis, the exception is thrown and the default recognition is csv.
+
+# 3.2.1
+
+* Compatible with `LocalDate` [Issue #2908](https://github.com/alibaba/easyexcel/issues/2908)
+* Optimize memory storage of large files and reduce memory usage [Issue #2657](https://github.com/alibaba/easyexcel/issues/2657)
+* Can read normally when temporary files are deleted [Issue #2693](https://github.com/alibaba/easyexcel/issues/2693)
+* The paging read listener supports customizing the number of paging items [Issue #2383](https://github.com/alibaba/easyexcel/issues/2383)
+
+#3.2.0
+
+* Fix the bug where some xlsx reading dates may differ by 1 second [Issue #1956](https://github.com/alibaba/easyexcel/issues/1956)
+* Fixed the bug where some data accuracy does not match excel [Issue #2805](https://github.com/alibaba/easyexcel/issues/2805)
+* Reading without creating an object supports reading primitive data types
+
+#3.1.5
+
+* Improve xlsx reading compatibility: use tags starting with ns2
+
+# 3.1.4
+
+* Improve xlsx reading compatibility: ignore empty columns when there are many empty columns in the first row
+
+# 3.1.3
+
+* Improve xlsx compatibility: compatible with `sharedStrings.xml` when `x:t` tag exists
+
+# 3.1.2
+
+* Fix the bug that long-running will generate large objects [Issue #2725](https://github.com/alibaba/easyexcel/issues/2725)
+
+## 3.1.1
+
+* Fixed the bug that some xlsx cannot read hyperlinks
+
+## 3.1.0
+
+* Support jdk17, remove cglib&asm dependency and make a new copy [Issue #2240](https://github.com/alibaba/easyexcel/issues/2240)
+* Upgrade ehcache to 3.9.9 for compatibility with jdk17
+* Even if there is a style but no data, it is also considered a blank row [Issue #2294](https://github.com/alibaba/easyexcel/issues/2294)
+* Fix the bug where csv cannot be judged based on file flow [Issue #2297](https://github.com/alibaba/easyexcel/issues/2297)
+* Fix the bug of CSV not closing the stream [Issue #2309](https://github.com/alibaba/easyexcel/issues/2309)
+* Fix `filed` splicing error [Issue #2390](https://github.com/alibaba/easyexcel/issues/2390)
+* Fix `BigIntegerStringConverter` invalid bug [Issue #2325](https://github.com/alibaba/easyexcel/issues/2325)
+* Fixed the bug that version 03 cannot read the formula format [Issue #2444](https://github.com/alibaba/easyexcel/issues/2444)
+* Improve type conversion compatibility [Issue #2443](https://github.com/alibaba/easyexcel/issues/2443)
+* Catching `setFeature` exception does not affect the main process [Issue #2054](https://github.com/alibaba/easyexcel/issues/2054)
+* Add some `xls` fault tolerance [Issue #2236](https://github.com/alibaba/easyexcel/issues/2236)
+* Fixed the problem of `autoTrim` configuration failure when reading csv files [Issue #2227](https://github.com/alibaba/easyexcel/issues/2227)
+* csv supports setting reading and writing encoding [Issue #2404](https://github.com/alibaba/easyexcel/issues/2404)
+* Read and write support `try-with-resources` syntax sugar
+
+## 3.0.5
+
+* Fixed the problem of `ReadListener` conversion exception not being thrown
+
+## 3.0.4
+
+* Adjust the default size for reading and writing to prevent full gc when writing in large batches
+* Added `afterRowDispose` event in case of `fill`
+
+## 3.0.3
+
+* Fix `HeadStyle` invalid bug
+
+## 3.0.2
+
+* Significantly improve reading and writing performance
+* Fix the bug where column width annotations are useless [Issue #2151](https://github.com/alibaba/easyexcel/issues/2151)
+* Fix the bug of `CellData` receiving failure [Issue #2147](https://github.com/alibaba/easyexcel/issues/2147)
+
+## 3.0.1
+
+*Upgrade to official version
+* Fix the problem that the fill style may be lost [Issue #2124](https://github.com/alibaba/easyexcel/issues/2124)
+* Fix the bug of possible NPE when the filling data is empty
+* Fixed the bug that the fill style may not take effect
+* Fixed the bug that the style may exceed the maximum limit
+* Fix the bug of slow writing
+
+## 3.0.0-beta3
+
+* Fixed the bug that exported floating point data may have abnormal precision
+
+## 3.0.0-beta2
+
+* Optimize writing style
+
+## 3.0.0-beta1
+
+* Upgrade jdk8 and no longer support jdk6 jdk7
+* Upgrade poi to 4.1.2
+* Upgrade cglib to 3.3.0
+* Upgrade ehcache to 3.8.1
+* Support non-camel case field reading and writing
+* Support csv reading & writing
+* Fixed that `CellData` may not return row and column numbers [Issue #1832](https://github.com/alibaba/easyexcel/issues/1832)
+* Optimize reading performance
+* Fixed the problem of not throwing exceptions in some cases
+* Version 07 will export the number of rows when exporting [Issue #1282](https://github.com/alibaba/easyexcel/issues/1282)
+* Fix null pointer exception when there is no style [Issue #1738](https://github.com/alibaba/easyexcel/issues/1738)
+* Modify exception throwing logic [Issue #1618](https://github.com/alibaba/easyexcel/issues/1618)
+* Compatible with some unofficial excel situations [Issue #1527](https://github.com/alibaba/easyexcel/issues/1527)
+* Modifying the read closing stream is invalid [Issue #1840](https://github.com/alibaba/easyexcel/issues/1840)
+* Write support for Collection [Issue #1834](https://github.com/alibaba/easyexcel/issues/1834)
+* `Converter` supports null conversion [Issue #1776](https://github.com/alibaba/easyexcel/issues/1776)
+* cglib adds a new naming strategy to prevent conflicts with `spring` [Issue #2064](https://github.com/alibaba/easyexcel/issues/2064)
+* Modify the bug where the filling may be filled in incorrectly [Issue #2035](https://github.com/alibaba/easyexcel/issues/2035)
+* Fixed the problem that the size of the returned map may be inconsistent with the size of the header when reading without an object [Issue #2014](https://github.com/alibaba/easyexcel/issues/2014)
+* Fix the bug that the merge header may be abnormal [Issue #1662](https://github.com/alibaba/easyexcel/issues/1662)
+* Fixed error when calling horizontal style strategy when filling in [Issue #1651](https://github.com/alibaba/easyexcel/issues/1651)
+* Fix the problem of automatic row height [Issue #1869](https://github.com/alibaba/easyexcel/issues/1869)
+* Added non-empty check for header [Issue #1765](https://github.com/alibaba/easyexcel/issues/1765)
+* Fixed some special excel reading failure issues [Issue #1595](https://github.com/alibaba/easyexcel/issues/1595)
+* Fix the exception of writing data without creating an object [Issue #1702](https://github.com/alibaba/easyexcel/issues/1702)
+* Fix the problem of overwriting if the header and data object are inconsistent [Issue #1870](https://github.com/alibaba/easyexcel/issues/1870)
+* Fixed the issue of possible sorting inconsistencies after ignoring fields
+* When modifying the filling, the generated template cannot be used [Issue #1552](https://github.com/alibaba/easyexcel/issues/1552)
+* Modify the filling without automatically inheriting the style [Issue #1710](https://github.com/alibaba/easyexcel/issues/1710)
+* Fixed the problem that the filled data cannot be empty [Issue #1703](https://github.com/alibaba/easyexcel/issues/1703)
+* Added some jdk8 features
+
+## 2.2.11
+
+* Fixed some bugs in xlsx parsing failure [Issue #1595](https://github.com/alibaba/easyexcel/issues/1595)
+
+## 2.2.10
+
+* Fix the bug of possible rounding inconsistency when using string to receive numbers when reading.
+
+## 2.2.9
+
+* Fix the bug of possible rounding inconsistency when using string to receive numbers when reading.
+
+## 2.2.8
+
+* Compatible with 07. In the case of special excel, reading data is abnormal.
+
+## 2.2.7
+
+* Modify the bug in 07 that decimal places will be lost when using `String` to receive numbers under special circumstances.
+
+## 2.2.6
+
+* Modify the bug of jumping to read the null pointer in version 03
+
+## 2.2.5
+
+* `ExcelProperty` adds `order` for sorting
+* Fixed the bug that exporting specified `index` would result in blank lines
+
+## 2.2.4
+
+* Undo deletion of `AbstractMergeStrategy`
+* Modify the default use of String to read numbers without using scientific notation. Modify through `useScientificFormat`
+* Fixed the bug that version 07 only has blank lines with styles and is not ignored by default
+* The problem of not setting `index` and `name` when writing `sheet` is not 0 by default
+* Fix the bug where multiple `sheet` are written out of order [Issue #1332](https://github.com/alibaba/easyexcel/issues/1332)
+* When the head is modified to be a List, the style of the content cell does not take effect [Issue #1339](https://github.com/alibaba/easyexcel/issues/1339)
+* Fix the bug that only formula rows in xls cannot be read [Issue #1324](https://github.com/alibaba/easyexcel/issues/1324)
+* Fix the bug of xls directly reading `NPE` on page 2 [Issue #1280](https://github.com/alibaba/easyexcel/issues/1280)
+* Fixed the bug where the creation of a blank line in the middle of the last line would fail when filling.
+* Fix the bug that `includeColumnIndexes` does not include the third column and the data cannot be exported [Issue #1346](https://github.com/alibaba/easyexcel/issues/1346)
+* Fixed the possibility of losing precision when converting the `@NumberFormat` annotation to double [Issue #1306](https://github.com/alibaba/easyexcel/issues/1306)
+
+## 2.2.3
+
+* Modify the bug of filling empty data [Issue #1274](https://github.com/alibaba/easyexcel/issues/1274)
+* Fallback when the input parameter of the custom converter is empty
+
+## 2.2.2
+
+* Modify the bug that the `sheet` event is not called
+* Fixed the bug that the complex table header does not start with `index=0` and merges abnormally [Issue #1322](https://github.com/alibaba/easyexcel/issues/1322)
+
+## 2.2.1
+
+* Release the official version
+* Fix the bug that `invokeHeadMap` will not be called when the first row is empty [Issue #993](https://github.com/alibaba/easyexcel/issues/993)
+* When the attributes of the class are not sorted according to the attribute index order of ExcelProperty, the writing data is disordered [Issue #1046](https://github.com/alibaba/easyexcel/issues/1046)
+* Added support for custom converters. The input parameters can be empty. Just implement `NullableObjectConverter` [Issue #1084](https://github.com/alibaba/easyexcel/issues/1084)
+*Fixed the problem of missing the last line when xls loses the end tag
+* Fixed the bug of multiple `forceNewRow` null pointers during filling [Issue #1201](https://github.com/alibaba/easyexcel/issues/1201)
+* Fix the bug that the interceptors created in `table` and `sheet` do not execute the `workbook` event [Issue #1202](https://github.com/alibaba/easyexcel/issues/1202)
+
+## 2.2.0-beta2
+
+* Fix the bug that the longest matching strategy will affect different tables [Issue #1010](https://github.com/alibaba/easyexcel/issues/1010)
+* Performance issues of `LinkedList` writing #1121
+* Fixed unnecessary `warn` logs that may appear in some cases
+
+## 2.2.0-beta1
+
+* Rewrite the main process to make the code more elegant
+* Fixed the bug of using String to receive dates, numbers and excel display inconsistently (not a perfect fix, but most cases are already compatible)
+* Reduce Ehcache version 3.7.1(jkd7) -> 3.4.0(jdk6)
+* Fixed the bug that when xls is received using Map, the same object will be received multiple times
+* Fix the bug that the accuracy will be lost when floating point data is imported into Excel
+* Added support for reading comments, hyperlinks, and merging cells
+* If it is `RuntimeException`, the object is no longer encapsulated
+* Added `CellData` to obtain row and column numbers
+* Added style annotation
+* Added merged cell comments
+* Improve the efficiency of merge strategies
+* Compatible with some special excels
+* When the heads of `List<List<String>>` and `class` are passed in at the same time, the annotations will be matched through index.
+* Fix concurrency issues with read converters
+* Filling supports multiple List objects
+
+## 2.1.7
+
+* Fix the writing method of using version 1+, change the starting reading of article 1 to the starting reading of article 0
+
+## 2.1.6
+
+* Fixed the problem that writing only `sheetName` would throw an exception
+
+## 2.1.5
+
+* Fixed some xlsx no line number reading exception
+* Support positioning `sheet` based on `sheetName` when filling
+
+## 2.1.4
+
+* Added new parameter `useDefaultListener` to exclude default object conversion
+
+## 2.1.3
+
+* Create a separate cache directory for each java process [Issue #813](https://github.com/alibaba/easyexcel/issues/813)
+* Unified modification and merge to unsafe to improve the efficiency of merging large amounts of data export
+* Modify merge return parameter `relativeRowIndex` to `Integer`
+* Added new parameter `automaticMergeHead` to disable automatic merging of headers [Issue #822](https://github.com/alibaba/easyexcel/issues/822)
+* Added new parameter `xlsxSAXParserFactoryName` to specify `SAXParserFactory`
+* Fix the problem of merge strategy null pointer
+* `SimpleColumnWidthStyleStrategy` adds new parameter `columnIndex` [Issue #806](https://github.com/alibaba/easyexcel/issues/806)
+
+## 2.1.2
+
+* Fixed the bug that forced the creation of new rows and only one row of data would be unfilled.
+
+## 2.1.1
+
+* Release the official version
+* Modify the map and return it to LinkedHashMap
+* Modify the object returned by synchronous reading to support generics
+* Fixed the bug that version 03 cannot directly read the second sheet [Issue #772](https://github.com/alibaba/easyexcel/issues/772)
+* Added support for URL for image export [Issue #774](https://github.com/alibaba/easyexcel/issues/774)
+* Add multiple shutdown judgments to prevent multiple shutdown exceptions
+* Added automatic identification of exported excel types based on templates
+* After modifying the default failure, data will no longer be written to the file stream. If the parameter setting is abnormal through the parameter `writeExcelOnException`, the previous data must be written.
+* Loop merging strategy supports merging multiple columns at one time
+* `ExcelDataConvertException` returns newly added specific error data
+* Add parsing class cache
+* Fixed the bug that the row height is not copied when filling [Issue #780](https://github.com/alibaba/easyexcel/issues/780)
+* Fixed the bug that version 03 could not obtain the approximate total number of rows
+
+## 2.1.0-beta4
+
+* Modify the bug of null pointer in the longest match strategy [Issue #747](https://github.com/alibaba/easyexcel/issues/747)
+* Modify afterRowDispose error [Issue #751](https://github.com/alibaba/easyexcel/issues/751)
+* Fixed the problem of empty data being read when multiple headers are used
+
+## 2.1.0-beta3
+
+* Supports forcibly specifying processing in memory to support writing of notes, RichTextString, etc.
+* Fixed an issue where closing the stream fails and temporary files may not be deleted
+* Support customizing export columns based on parameters
+* Modify the maximum length of the longest match strategy [Issue #734](https://github.com/alibaba/easyexcel/issues/734)
+* Fix the bug that the strategy header does not take effect [Issue #735](https://github.com/alibaba/easyexcel/issues/735)
+* Fixed the issue where numbers would be abnormal when filling
+
+## 2.1.0-beta2
+
+* Modify the bug that caused errors when creating templates through streams
+* Fixed the bug where empty data was not replaced
+* Fixed the bug that an empty template would have a blank line
+
+## 2.1.0-beta1
+
+* Added support for import and export support formulas
+* Added support for reading cell types and writing specified cell types
+* Support filling data through templates
+* Added support for writing disabled header style `useDefaultStyle`
+* Use map to read data. Empty cells will also have null data.
+* Conversion error report can obtain the corresponding row number and column number
+* Optimize reading all sheet solutions
+* Added annotation `ExcelIgnoreUnannotated` to support ignoring fields that are not annotated with `ExcelProperty`
+* Support export encryption [Issue #361](https://github.com/alibaba/easyexcel/issues/361)
+* Support import encryption [Issue #295](https://github.com/alibaba/easyexcel/issues/295)
+
+## 2.0.5
+
+* Optimize version 07 large file reading solution
+* Support setting parameters for reading large files by yourself
+* The bug that reading xlsx will change the modification time [Issue #574](https://github.com/alibaba/easyexcel/issues/574)
+* The default reading ignores empty lines according to the parameter ignoreEmptyRow parameter setting
+
+## 2.0.4
+
+* Fix the NPE that occurs when only numbers exist in the entire excel in version 07
+* Fixed issue with scientific notation when using String to receive phone calls in version 03
+
+## 2.0.3
+
+* Fixed a major bug. When reading files in version 07, there is a small probability that the digital part will be lost.
+
+## 2.0.2
+
+* Fix the bug that xls cannot obtain sheetList [Issue #621](https://github.com/alibaba/easyexcel/issues/621)
+* Fixed the bug where listener conversion exceptions would cause repeated prompts
+
+## 2.0.1
+
+* Downgrade poi to 3.17 to be compatible with jdk6
+
+## 2.0.0
+
+* Fixed a bug where a null pointer may be thrown when the cell is empty
+* Fix the problem that the scientific notation may appear in numbers with the same length as phone numbers [Issue #583](https://github.com/alibaba/easyexcel/issues/583)
+*Upgrade to official version
+
+## 2.0.0-beta6
+
+* Fix null pointer exception when reading empty lines
+* Fix the null pointer caused by writing the specified header as ```List<List<String>>```, but the data uses ```List<Class>```
+
+## 2.0.0-beta5
+
+* Fixed the problem of data conversion exception caused by reading extra values when reading values.
+
+## 2.0.0-beta4
+
+* Modify the error in judging the number of rows when passing in ```List<List<Object>>``` [Issue #526](https://github.com/alibaba/easyexcel/issues/526)
+* Fix the problem that there may be redundant fields in excel exported on mac 2016 2017
+* Fixed the problem of unable to specify sheet when reading version 03 [Issue #533](https://github.com/alibaba/easyexcel/issues/533)
+
+## 2.0.0-beta3
+
+* Remove the temporary directory after exporting [Issue #386](https://github.com/alibaba/easyexcel/issues/386)
+* Added read return header data
+
+## 2.0.0-beta2
+
+* Accelerate gc recycling [Issue #511](https://github.com/alibaba/easyexcel/issues/511)
+* Modify the bug where empty string reading may read the data of the previous field
+* Modify the bug that line-wrapped data cannot be read [Issue #521](https://github.com/alibaba/easyexcel/issues/521)
+* Fixed format conversion exception when empty string [Issue #520](https://github.com/alibaba/easyexcel/issues/520)
+
+## 2.0.0-beta1
+
+* Optimize reading and writing logic
+* Optimize reading and writing external interface
+* Add a converter to facilitate format conversion
+* Greatly optimize the memory and efficiency of reading large files
+* sheetNo is changed to 0 to start
+* Reading supports specifying column names
+* Upgrade poi to 4.0.1
+
+## 1.2.4
+
+Fix the bug in read() method
+
+## 1.2.1
+
+Fixed the bug where POI failed to create a temporary directory under large concurrency conditions
+
+## 1.0.9
+
+Fixed the problem of overwriting more than 16 excel columns, and fixed the bug that data cannot be transparently transmitted when there is only one row.
+
+## 1.0.8
+
+If the entire row of excel data is empty, it will not be parsed and returned. Improve the analysis of multiple sheets.
+
+## 1.0.6
+
+Add @ExcelColumnNum, repair the whitespace before and after the string, and add filtering function.
+
+## 1.0.5
+
+Optimize the performance of type conversion.
+
+## 1.0.4
+
+Fixed numeric issues when converting date types. The basic model supports field types int, long, double, boolean, date, string
+
+## 1.0.3
+
+Fixed an error when redundant fields without @ExcelProperty annotation are reported.
+
+## 1.0.2
+
+Fixed the bug that after getting a row of data, it is saved into the list, but becomes empty during final processing.
+
+## 1.0.1
+
+Improve the test cases to prevent ambiguity. If the model fields cannot be mapped correctly, an exception will be thrown. Change it to a reminder.
